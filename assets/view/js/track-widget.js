@@ -224,16 +224,19 @@
         tagHtml = '<span class="pt-vstep-tag">Completed</span>';
       }
 
-      var locText = '';
-      if (i === 0 || i === 1) {
-        locText = originTerminal;
-      } else if (i === 2) {
-        locText = 'Inter-Terminal Freight Transit';
-      } else {
-        locText = destinationHub;
-      }
+      // Location & date are only shown for the final milestone step
+      var metaHtml = '';
+      if (isDeliveredStep) {
+        var timeText = (estDateObj && !isNaN(estDateObj.getTime()))
+          ? (activeStep === 4 ? formatShortDate(estDateObj) : 'Est. ' + formatShortDate(estDateObj))
+          : '';
 
-      var timeText = getStepTime(i, activeStep, estDateObj);
+        metaHtml = 
+          '<div class="pt-vmeta">' +
+            '<span><i class="fa fa-map-marker"></i> ' + escapeHtml(destinationHub) + '</span>' +
+            (timeText ? '<span><i class="fa fa-calendar-check-o"></i> ' + escapeHtml(timeText) + '</span>' : '') +
+          '</div>';
+      }
 
       stepsHtml += 
         '<div class="' + stepClass + '">' +
@@ -247,10 +250,7 @@
               tagHtml +
             '</div>' +
             '<div class="pt-vnote">' + MILESTONES[i].note + '</div>' +
-            '<div class="pt-vmeta">' +
-              '<span><i class="fa fa-map-marker"></i> ' + escapeHtml(locText) + '</span>' +
-              (timeText ? '<span><i class="fa fa-calendar-check-o"></i> ' + timeText + '</span>' : '') +
-            '</div>' +
+            metaHtml +
           '</div>' +
         '</div>';
     }

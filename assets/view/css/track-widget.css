@@ -580,7 +580,7 @@ header .navbar-brand.mobile-logo img {
   position: relative;
   display: flex;
   align-items: stretch;
-  min-height: 58px;
+  min-height: 48px;
 }
 
 .pt-vstep:last-child {
