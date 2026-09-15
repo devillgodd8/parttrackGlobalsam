@@ -1,0 +1,168 @@
+# ============================================================
+# Netlify Configuration - Clean URL Routing
+# ============================================================
+# Netlify has built-in "Pretty URLs" support.
+# Enable it in: Site settings > Build & deploy > Post processing > Asset optimization
+# This config provides additional redirect rules for full control.
+# ============================================================
+
+[build]
+  publish = "."
+
+# Enable Netlify's built-in pretty URLs (strips .html automatically)
+[build.processing.html]
+  pretty_urls = true
+
+# Redirect .html extensions to clean URLs (301 permanent)
+[[redirects]]
+  from = "/index.html"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/about-us.html"
+  to = "/about-us"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/contact-us.html"
+  to = "/contact-us"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/privacy-policy.html"
+  to = "/privacy-policy"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/return-policy.html"
+  to = "/return-policy"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/shipping-policy.html"
+  to = "/shipping-policy"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/terms-and-conditions.html"
+  to = "/terms-and-conditions"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/warranty-policy.html"
+  to = "/warranty-policy"
+  status = 301
+  force = true
+
+# Remove trailing slashes
+[[redirects]]
+  from = "/about-us/"
+  to = "/about-us"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/contact-us/"
+  to = "/contact-us"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/privacy-policy/"
+  to = "/privacy-policy"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/return-policy/"
+  to = "/return-policy"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/shipping-policy/"
+  to = "/shipping-policy"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/terms-and-conditions/"
+  to = "/terms-and-conditions"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/warranty-policy/"
+  to = "/warranty-policy"
+  status = 301
+  force = true
+
+# Rewrite clean URLs to .html files (200 = serve file, not redirect)
+[[redirects]]
+  from = "/about-us"
+  to = "/about-us.html"
+  status = 200
+
+[[redirects]]
+  from = "/contact-us"
+  to = "/contact-us.html"
+  status = 200
+
+[[redirects]]
+  from = "/privacy-policy"
+  to = "/privacy-policy.html"
+  status = 200
+
+[[redirects]]
+  from = "/return-policy"
+  to = "/return-policy.html"
+  status = 200
+
+[[redirects]]
+  from = "/shipping-policy"
+  to = "/shipping-policy.html"
+  status = 200
+
+[[redirects]]
+  from = "/terms-and-conditions"
+  to = "/terms-and-conditions.html"
+  status = 200
+
+[[redirects]]
+  from = "/warranty-policy"
+  to = "/warranty-policy.html"
+  status = 200
+
+# Headers for caching
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=2592000"
+
+[[headers]]
+  for = "*.css"
+  [headers.values]
+    Cache-Control = "public, max-age=2592000"
+
+[[headers]]
+  for = "*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=2592000"
+
+[[headers]]
+  for = "*.png"
+  [headers.values]
+    Cache-Control = "public, max-age=2592000"
+
+[[headers]]
+  for = "*.svg"
+  [headers.values]
+    Cache-Control = "public, max-age=2592000"

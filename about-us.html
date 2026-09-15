@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<!-- Mirrored from reveraforteauto.com/about-us by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 23 Sep 2026 19:51:42 GMT -->
+<!-- Added by HTTrack -->
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>About Us</title>
+    <meta name="description" content="">
+    <link rel="canonical" href="/about-us" />
+    <link rel="icon" href="favicon.png" type="image/png">
+    <link rel="stylesheet" href="assets/view/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="assets/view/css/animate.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <link rel="stylesheet" href="assets/view/css/style8e0e.css?v=8" />
+    <link rel="stylesheet" href="assets/view/css/responsive.css" />
+    <link rel="stylesheet" href="assets/view/css/track-widget.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
+
+    <style>
+        .fixed-bottom-bar {
+            position: fixed;
+            bottom: 0;
+            right: 0;
+            padding: 1em;
+            width: 100%;
+            color: #fff;
+            text-align: center;
+            z-index: 9999;
+            display: none
+        }
+
+        @media only screen and (max-width: 600px) {
+            .fixed-bottom-bar {
+                display: block;
+
+            }
+        }
+
+        .choose_Section {
+            background-image: url(assets/view/images/choose-us-new.png);
+        }
+
+        @media (max-width:991px) {
+            .choose_Section {
+                background-image: none;
+            }
+        }
+
+        #loader {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.75) url("images/logo-light.html") no-repeat center center;
+            background-size: 25vh;
+            z-index: 10000;
+        }
+
+        progress-bar {
+            position: relative;
+            height: 10px;
+            width: 200px;
+            background: var(--grey);
+            border-radius: 25px;
+        }
+
+        .progress-fill {
+            position: absolute;
+            height: 10px;
+            width: 0%;
+            animation: progress-forward 3s infinite;
+            background: white;
+            border-radius: 15px;
+        }
+
+        @keyframes progress-forward {
+            0% {
+                width: 0%;
+            }
+
+            25% {
+                width: 50%;
+            }
+
+            50% {
+                width: 75%;
+            }
+
+            75% {
+                width: 85%;
+            }
+
+            100% {
+                width: 100%;
+            }
+        }
+
+        .demo-time-range button {
+            display: inline-block;
+            margin: 5px 5px 0 0;
+            padding: 10px 30px;
+            outline: 0;
+            border: 0;
+            cursor: pointer;
+            background: #5185a8;
+            color: #fff;
+            text-decoration: none;
+            font-family: arial, verdana, sans-serif;
+            font-size: 14px;
+            font-weight: 100;
+        }
+
+        .demo-time-range .mbsc-page {
+            padding: 1em;
+        }
+
+        .mbsc-font.mbsc-flex.mbsc-popup-wrapper.mbsc-popup-wrapper-bottom.mbsc-ios.mbsc-ltr.mbsc-picker.mbsc-popup-round {
+            background-color: #00000069;
+        }
+    </style>
+    <script>
+        function openNav() {
+            document.getElementById("navbarSupportedContent").style.left = "0";
+
+            var image = document.getElementById('bar-icon');
+            if (image.src.match("assets/view/images/bar-icon.svg")) {
+                image.src = "assets/view/images/close.svg";
+            }
+            else {
+                image.src = "assets/view/images/bar-icon.svg";
+                document.getElementById("navbarSupportedContent").style.left = "-300px";
+            }
+        }
+    </script>
+
+    <style>
+        .pmc {
+            background: #04003f
+        }
+
+        .sec {
+            background: steelblue
+        }
+
+        .covers .image-btn:nth-of-type(2)::after {
+            background: steelblue;
+        }
+    </style>
+</head>
+
+<body>
+    <header id="header" class="sticky">
+
+        <div class="head-div pmc">
+
+            <div class="header-container container">
+                <nav class="navbar navbar-expand-lg p-0 " style="position: initial;">
+
+                    <a class="navbar-brand deskto-logo logo" href="/"><img src="globalsam-logo-light.jpg"
+                            alt="Global SAM Auto logo" /></a>
+                    <span style="font-size:30px;cursor:pointer" class="toggel-btn-menu" onclick="openNav()">
+                        <img src="assets/view/images/bar-icon.svg" width="25px" id="bar-icon" alt="menu icons" />
+                    </span>
+                    <div class="navbar-collapse sidenav" id="navbarSupportedContent">
+
+                        <ul class="navbar-nav justify-content-end w-100 align-items-center">
+                            <li class="nav-item">
+                                <a class="nav-link" href="/">Home </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/about-us">About Us</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/shipping-policy">Shipping Policy</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="/warranty-policy"> Warranty Policy </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/return-policy"> Refund & Return Policy </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="/contact-us">Contact Us</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link track-order-link" href="/track-order" onclick="openTrackModal(event)">
+                                    <i class="fa fa-truck"></i> Track My Order
+                                </a>
+                            </li>
+
+                            <li class="nav-item contact-number-nav">
+                                <div class="tollfree-new">
+                                    <img src="assets/view/images/call-icon.png" alt="call-icon" width="25px" />
+                                    <div>
+                                        <h6 class="">Contact Number</h6>
+                                        <h6 class=""><a class="" href="tel:+18776118211">+1 (361) 203-9170</a></h6>
+                                    </div>
+                                </div>
+                            </li>
+
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </div>
+
+    </header>
+
+
+
+
+    <div class="mainbody">
+        <style>
+            .exp_section ol,
+            .exp_section ul {
+                padding-left: 2rem;
+                list-style: auto;
+            }
+
+            .exp_section li,
+            .exp_section ol {
+                margin: 0 0 10px;
+            }
+
+            .exp_section {
+                padding-bottom: 0px;
+                padding-top: 45px;
+            }
+
+            .color {
+                color: darkblue;
+            }
+        </style>
+
+        <section class="exp_section">
+            <div class="container-extra-custom  position-relative">
+                <div class="shadow"></div>
+                <div class="row  ">
+                    <div class="col-md-12 mb-4">
+                        <h2>About Global SAM Auto</h2>
+                        <p class=" mb-3 pb-2">Global SAM Auto, a trustworthy online auto parts shop which makes auto
+                            parts shopping easy in the United States.
+                            To buy spare parts and auto body parts, you can use 3 given easy and convenient ways.
+                        </p>
+                        <b>Order Now:</b>
+
+                        <ol style="margin-top:10px">
+                            <li>
+
+                                <strong>Contact Number: <a href="tel:+18776118211">+18776118211</a></strong>
+                                <br>
+                                Use our Contact number to order any auto part (New/Used/OEM/Replacement/Aftermarket).
+                            </li>
+                            <li>
+                                <strong><a href="/#form_section">Auto Part Request Form</a></strong>
+                                <br>
+                                Start online ordering by using auto part request form. To order auto parts and auto body
+                                parts in bulk, <a href="/#form_section">click here</a>.
+                            </li>
+                            <li>
+                                <strong>Email: <a
+                                        href="mailto:info@globalsamauto.com">info@globalsamauto.com</a></strong>
+                                <br>
+                                Use company email to send specific auto part requirement.
+                            </li>
+                        </ol>
+
+                        <b>Customer Support</b>
+                        <p>Need any assistance related to delivered products or delivery shipping services? Let our
+                            customer support team to handle your queries. Dial
+
+                            <a href="tel:+18776118211"><b>+18776118211</b></a>
+                        </p>
+                        <p>We hold years of experience in serving high-quality automotive parts and accessories in USA
+                            automotive market. We have a supportive team for sales and customer support to take care of
+                            our customer convenience. Connected auto part dealers with Global SAM Auto strive hard to
+                            offer best auto parts throughout the US to match customer’s expectations.
+                        </p>
+                        <p>Our incredible level of professionalism, products quality and competitive prices are the
+                            reasons behind the success in automobile industry.</p>
+                        <p>Primary aim is to supply customers with best auto body parts and spare parts. We are one of
+                            the most prominent companies in terms of dependability, availability, and pocket-friendly
+                            prices. Offer performance auto parts, replacement parts, and accessories across the US.</p>
+
+                        <b>Buy auto parts from us and get yourself satisfied.</b>
+                        <p>Global SAM Auto allows customers to buy new, old, oem auto part easily. Also ease the way of
+                            online shopping with secure checkout and on time delivery. Choosing us will help you to get
+                            exceptional shopping experience.</p>
+                        <p>Buying automotive parts online from us, assured to receive superior quality product at a low
+                            prices with warranty. We understand the importance of finding exact fit of automotive parts
+                            for cars and trucks.</p>
+                        <b>Our Vision</b>
+                        <p>To organize automobile industry where individuals can seek right fit automobile parts within
+                            a few clicks.</p>
+                        <b>Our Mission</b>
+                        <p>To become 1st online store in United States in terms of ordering auto parts and safe delivery
+                            of it. We aim to manage industry of automotive parts and make it completely transparent and
+                            dynamic.</p>
+                        <b class="color">How Global SAM Auto Stays Ahead?</b>
+                        <p>We are a company with fantastic history in auto industry of USA. Till now we have served
+                            various customers with finer quality car and truck parts at huge discounts. Team with us
+                            makes every effort to provide supreme automotive parts and delivery services.</p>
+                        <p>Search our directory for different auto parts online which includes auto parts, mirrors,
+                            hoods, tails and others. Apart from eminence products we offer, we also know the
+                            significance of great service. This is the reason we recruit friendly and supportive
+                            customer support team to whom one can call anytime to resolve their queries.</p>
+                        <b>Low Price Assurance</b>
+                        <p>Endeavour to make sure that prices of truck and car parts at online shop are low. If you
+                            seeking something, we are not providing, please contact our sales team for assistance for
+                            guidance and consultation.</p>
+                        <p>Our secure online shopping platform enables you to find best-suited auto part for cars or
+                            trucks. Seize the discounts by buying automotive parts from us. Explore our rich selection
+                            of auto parts and accessories for several makes and models. Provide auto part of trusted
+                            brand so be sure that branded cars and trucks will function smoothly.</p>
+                        <b>Value of Customers</b>
+                        <p>At Global SAM Auto, you can search auto body part, mechanical car part, electrical car part
+                            and drivetrain part easily. We value our customers, this is the reason we offer 50%
+                            discount. Purchase premium auto parts without paying tons of money. We make you find the
+                            best quality product with outstanding customer service.</p>
+                        <b class="color">Why choose Global SAM Auto?</b>
+                        <b>
+                            <p>Top reason for choosing us:</p>
+                        </b>
+                        <ol>
+                            <li>Offers reliable, efficient and fast delivery service</li>
+                            <li>Provide a better value of auto parts than other suppliers</li>
+                            <li>Customer support and sales team is supportive and friendly</li>
+                            <li>Offer technical assistance to customers</li>
+
+                        </ol>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+
+
+    </div>
+
+
+    <footer>
+        <div class="container container-extra-custom">
+            <div class="row">
+                <div class="col-md-6 col-lg-3">
+                    <div class="mb-2"><img src="globalsam-logo-light.jpg" alt="Global SAM Auto logo" width="200" />
+                    </div>
+
+
+                    <div class="follow-div desktop-follow mt-4">
+                        <a href="#" target="_blank"><img src="assets/view/images/facebook.svg" alt="facebook"
+                                style="width:9px;" /></a>
+                        <a href="#" target="_blank"> <img src="assets/view/images/tweeter.svg" alt="twitter" /></a>
+                        <a href="#" target="_blank"> <img src="assets/view/images/instagram.svg" alt="instagram" /></a>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="accordian">
+                        <div class="accordian_title">Links</div>
+                        <div class="accordian_content">
+                            <ul>
+                                <li><a href="/">Home</a></li>
+                                <li><a href="/about-us">About us</a></li>
+                                <li><a href="/contact-us">Contact us</a></li>
+                                <li><a href="/privacy-policy">Privacy Policy</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-3">
+                    <div class="accordian">
+                        <div class="accordian_title">Other Links</div>
+                        <div class="accordian_content">
+                            <ul>
+                                <li><a href="/terms-and-conditions">Terms & Conditions</a></li>
+                                <li><a href="/shipping-policy">Shipping Policy</a></li>
+                                <li><a href="/warranty-policy">Warranty Policy</a></li>
+                                <li><a href="/return-policy">Refund & Return Policy</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 col-lg-3">
+                    <div class="accordian">
+                        <div class="accordian_title">Contact Us</div>
+                        <div class="accordian_content">
+                            <ul class="contsct-ul">
+                                <li><img src="assets/view/images/call.svg" alt="call" /> <span>
+                                        <a href="tel:+18776118211" style="color:#fff">+18776118211</a>
+                                    </span>
+                                </li>
+
+                                <li> <img src="assets/view/images/email.svg" alt="email" /> <span>
+                                        info@globalsamauto.com</span></li>
+
+                                <li><img src="assets/view/images/location.svg" alt="location" /> <span>1309 Coffeen Ave,
+                                        Suite 1200
+                                        Sheridan, WY 82801</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="bottom-footer">
+            <div class="container container-extra-custom">
+                <div class="row">
+                    <div class="col-md-12 col-lg-6 ">
+                        <p>Global SAM Auto LLC © 2026.All Rights Reserved.</p>
+                    </div>
+                    <div class="col-md-12 col-lg-6 align-items-center">
+                        <p class="right">"Shipping within United States"</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div class="fixed-bottom-bar pmc">
+        <img src="assets/view/images/call.svg" alt="call"> <a class=""
+            style="color: #fff; font-size: 16px; font-weight: 600; font-family: system-ui;"
+            href="tel:+18776118211">+18776118211</a>
+    </div>
+
+    <!-- Track My Order Modal (PartTrack 5-Point Shipment Tracking) -->
+    <div id="ptModalOverlay" class="pt-modal-overlay" onclick="if(event.target === this) closeTrackModal()">
+        <div class="pt-modal-dialog">
+            <button type="button" class="pt-modal-close-btn" onclick="closeTrackModal()" aria-label="Close">&times;</button>
+            <div class="pt-widget" id="pt-widget">
+                <h4><i class="fa fa-truck" style="color: var(--pt-accent);"></i> Track Consignment</h4>
+                <p class="pt-desc">Enter your 12-digit tracking number to view milestone progress.</p>
+                
+                <div class="pt-form">
+                    <input type="text" id="pt-input" class="pt-input" placeholder="e.g. 241190101721" />
+                    <button id="pt-btn" class="pt-btn">Track Order</button>
+                </div>
+                
+                <div id="pt-result"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/view/js/part.js"></script>
+    <script src="assets/view/js/track-widget.js"></script>
+</body>
+
+<!-- Mirrored from reveraforteauto.com/about-us by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 23 Sep 2026 19:51:42 GMT -->
+
+</html>

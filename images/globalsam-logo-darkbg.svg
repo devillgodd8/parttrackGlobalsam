@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 120" width="100%" height="100%">
+  <defs>
+    <!-- Metallic Silver Gradients -->
+    <linearGradient id="silverGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="35%" stop-color="#E2E8F0" />
+      <stop offset="70%" stop-color="#CBD5E1" />
+      <stop offset="100%" stop-color="#94A3B8" />
+    </linearGradient>
+
+    <linearGradient id="chromeRim" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#64748B" />
+      <stop offset="50%" stop-color="#F8FAFC" />
+      <stop offset="100%" stop-color="#475569" />
+    </linearGradient>
+
+    <!-- Racing Red Gradient -->
+    <linearGradient id="redGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF4D5E" />
+      <stop offset="50%" stop-color="#DC2626" />
+      <stop offset="100%" stop-color="#991B1B" />
+    </linearGradient>
+
+    <!-- Subtle Drop Shadow -->
+    <filter id="subtleGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000000" flood-opacity="0.5" />
+    </filter>
+  </defs>
+
+  <!-- Group: Emblem (Gear + Globe + Speed Wings) -->
+  <g transform="translate(10, 10)" filter="url(#subtleGlow)">
+    <!-- Outer Gear / Turbine Cogwheel -->
+    <path d="M 50 12 
+             L 53 18 A 38 38 0 0 1 65 23 L 71 18 L 78 25 L 73 31 
+             A 38 38 0 0 1 78 43 L 84 46 L 84 56 L 78 59 
+             A 38 38 0 0 1 73 71 L 78 77 L 71 84 L 65 79 
+             A 38 38 0 0 1 53 84 L 50 90 L 40 90 L 37 84 
+             A 38 38 0 0 1 25 79 L 19 84 L 12 77 L 17 71 
+             A 38 38 0 0 1 12 59 L 6 56 L 6 46 L 12 43 
+             A 38 38 0 0 1 17 31 L 12 25 L 19 18 L 25 23 
+             A 38 38 0 0 1 37 18 L 40 12 Z" 
+          fill="none" stroke="url(#chromeRim)" stroke-width="4.5" stroke-linejoin="round" />
+
+    <!-- Inner Globe Ring -->
+    <circle cx="45" cy="51" r="28" fill="none" stroke="url(#silverGrad)" stroke-width="3" opacity="0.85" />
+    
+    <!-- Globe Parallels & Meridians -->
+    <path d="M 17 51 Q 45 33 73 51 Q 45 69 17 51 Z" fill="none" stroke="url(#silverGrad)" stroke-width="1.8" opacity="0.6" />
+    <path d="M 45 23 C 33 33 33 69 45 79 C 57 69 57 33 45 23 Z" fill="none" stroke="url(#silverGrad)" stroke-width="1.8" opacity="0.6" />
+    <line x1="45" y1="23" x2="45" y2="79" stroke="url(#silverGrad)" stroke-width="1.5" opacity="0.6" />
+    <line x1="17" y1="51" x2="73" y2="51" stroke="url(#silverGrad)" stroke-width="1.5" opacity="0.6" />
+
+    <!-- Aerodynamic Speed Wings & Motion Arrow -->
+    <path d="M 22 55 C 38 48, 55 35, 96 22 C 78 33, 66 42, 60 51 C 74 44, 88 38, 102 33 C 86 44, 76 53, 70 61 C 80 57, 90 53, 98 50 C 76 66, 56 70, 36 65 C 44 60, 48 54, 22 55 Z" 
+          fill="url(#redGrad)" filter="url(#subtleGlow)" />
+    
+    <!-- Wing Chrome Highlight Line -->
+    <path d="M 30 54 C 48 46, 68 33, 94 24" fill="none" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round" opacity="0.9" />
+  </g>
+
+  <!-- Typography for Dark Backgrounds -->
+  <g transform="translate(130, 24)">
+    <!-- GLOBAL SAM -->
+    <text x="0" y="44" 
+          font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Montserrat', sans-serif" 
+          font-size="42" 
+          font-weight="900" 
+          letter-spacing="2.5" 
+          fill="url(#silverGrad)"
+          filter="url(#subtleGlow)">GLOBAL SAM</text>
+    
+    <!-- AUTO & Speed Lines -->
+    <g transform="translate(2, 68)">
+      <text x="0" y="0" 
+            font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Montserrat', sans-serif" 
+            font-size="20" 
+            font-weight="800" 
+            letter-spacing="11" 
+            fill="url(#redGrad)">AUTO</text>
+      
+      <!-- Dynamic Speed Accent Bars -->
+      <path d="M 120 -6 L 330 -6" stroke="url(#redGrad)" stroke-width="2.5" stroke-linecap="round" />
+      <circle cx="340" cy="-6" r="3" fill="#DC2626" />
+    </g>
+  </g>
+</svg>

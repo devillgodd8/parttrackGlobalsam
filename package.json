@@ -1,0 +1,17 @@
+{
+  "name": "revera-auto",
+  "version": "1.0.0",
+  "description": "Revera Auto - Used Engines & Transmissions",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "engines": {
+    "node": ">=20.x"
+  },
+  "dependencies": {
+    "compression": "^1.8.1",
+    "express": "^5.2.1"
+  }
+}

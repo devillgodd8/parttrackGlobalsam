@@ -1,0 +1,45 @@
+{
+  "buildCommand": "",
+  "outputDirectory": ".",
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "redirects": [
+    { "source": "/index.html", "destination": "/", "statusCode": 301 },
+    { "source": "/about-us.html", "destination": "/about-us", "statusCode": 301 },
+    { "source": "/contact-us.html", "destination": "/contact-us", "statusCode": 301 },
+    { "source": "/privacy-policy.html", "destination": "/privacy-policy", "statusCode": 301 },
+    { "source": "/return-policy.html", "destination": "/return-policy", "statusCode": 301 },
+    { "source": "/shipping-policy.html", "destination": "/shipping-policy", "statusCode": 301 },
+    { "source": "/terms-and-conditions.html", "destination": "/terms-and-conditions", "statusCode": 301 },
+    { "source": "/warranty-policy.html", "destination": "/warranty-policy", "statusCode": 301 }
+  ],
+  "rewrites": [
+    { "source": "/about-us", "destination": "/about-us.html" },
+    { "source": "/contact-us", "destination": "/contact-us.html" },
+    { "source": "/privacy-policy", "destination": "/privacy-policy.html" },
+    { "source": "/return-policy", "destination": "/return-policy.html" },
+    { "source": "/shipping-policy", "destination": "/shipping-policy.html" },
+    { "source": "/terms-and-conditions", "destination": "/terms-and-conditions.html" },
+    { "source": "/warranty-policy", "destination": "/warranty-policy.html" }
+  ],
+  "headers": [
+    {
+      "source": "/assets/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=2592000" }
+      ]
+    },
+    {
+      "source": "/(.*).css",
+      "headers": [
+        { "key": "Content-Type", "value": "text/css" }
+      ]
+    },
+    {
+      "source": "/(.*).js",
+      "headers": [
+        { "key": "Content-Type", "value": "application/javascript" }
+      ]
+    }
+  ]
+}
