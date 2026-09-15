@@ -311,7 +311,7 @@
 
         '<div class="pt-footer-note">' +
           '<span class="pt-verified"><i class="fa fa-check-circle"></i> Verified Freight Dispatch</span>' +
-          '<span>Logistics Support: <a href="tel:+18776118211" style="color:var(--pt-text);font-weight:600;text-decoration:none;">+1 (877) 611-8211</a></span>' +
+          '<span>Logistics Support: <a href="tel:+18776118211" style="color:var(--pt-text);font-weight:600;text-decoration:none;">+1 (833)9977866</a></span>' +
         '</div>';
     }
   };
