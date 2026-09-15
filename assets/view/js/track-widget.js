@@ -4,7 +4,7 @@
  */
 
 (function() {
-  var API_KEY = 'pt_live_da6b183ffacafe06f8f0fd398e15a5d70f4c092aeafe407f';
+  var API_KEY = 'pt_live_4703f0e5f527084b90b7c841317e7cd5b6ce8ac785d22474';
   var API_BASE = '/api/v1/track/';
   var MILESTONES = ['Processing', 'Pickup', 'In Transit', 'Out for Delivery', 'Delivered'];
 
