@@ -4,7 +4,7 @@
  */
 
 (function() {
-  var API_KEY = 'pt_live_4703f0e5f527084b90b7c841317e7cd5b6ce8ac785d22474';
+  var API_KEY = 'pt_live_b89f964b3f26ca88d3e7d14abc5f3179010bc8254fe22fd0';
   var REMOTE_API_BASE = 'https://app.reviorcm.com/backend/index.php/api/v1/track/';
   var LOCAL_API_BASE = '/api/v1/track/';
 
