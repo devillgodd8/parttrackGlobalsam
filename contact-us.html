@@ -714,17 +714,25 @@
 
 	<script src="assets/view/js/part.js"></script>
 
-	<!-- Track My Order Modal (PartTrack 5-Point Shipment Tracking) -->
+	<!-- Track My Order Modal (PartTrack Enterprise Consignment Tracking) -->
 	<div id="ptModalOverlay" class="pt-modal-overlay" onclick="if(event.target === this) closeTrackModal()">
 		<div class="pt-modal-dialog">
-			<button type="button" class="pt-modal-close-btn" onclick="closeTrackModal()" aria-label="Close">&times;</button>
+			<button type="button" class="pt-modal-close-btn" onclick="closeTrackModal()" aria-label="Close modal">&times;</button>
 			<div class="pt-widget" id="pt-widget">
-				<h4><i class="fa fa-truck" style="color: var(--pt-accent);"></i> Track Consignment</h4>
-				<p class="pt-desc">Enter your 12-digit tracking number to view milestone progress.</p>
+				<div class="pt-header">
+					<h4><i class="fa fa-truck pt-header-icon"></i> Consignment Tracking</h4>
+					<p class="pt-desc">Enter your 12-digit consignment tracking number to view milestone progress.</p>
+				</div>
 				
 				<div class="pt-form">
-					<input type="text" id="pt-input" class="pt-input" placeholder="e.g. 241190101721" />
-					<button id="pt-btn" class="pt-btn">Track Order</button>
+					<input type="text" id="pt-input" class="pt-input" placeholder="Enter tracking number (e.g. 241190101721)" />
+					<button id="pt-btn" class="pt-btn" type="button">Track Consignment</button>
+				</div>
+
+				<div class="pt-quick-hint">
+					<span>Quick Lookup:</span>
+					<button type="button" class="pt-quick-btn" onclick="document.getElementById('pt-input').value='241190101721'; trackConsignment('241190101721')">241190101721 (In Transit)</button>
+					<button type="button" class="pt-quick-btn" onclick="document.getElementById('pt-input').value='100000000002'; trackConsignment('100000000002')">100000000002 (Delivered)</button>
 				</div>
 				
 				<div id="pt-result"></div>
