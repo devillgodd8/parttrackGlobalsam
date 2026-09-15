@@ -5,7 +5,7 @@
 
 (function() {
   var API_KEY = 'pt_live_4703f0e5f527084b90b7c841317e7cd5b6ce8ac785d22474';
-  var API_BASE = '/api/v1/track/';
+  var API_BASE = 'https://app.reviorcm.com/backend/index.php/api/v1/track/';
   var MILESTONES = ['Processing', 'Pickup', 'In Transit', 'Out for Delivery', 'Delivered'];
 
   function getStepIndex(status) {
