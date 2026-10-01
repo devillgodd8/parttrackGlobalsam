@@ -76,6 +76,50 @@ app.get('/api/v1/track/:trackingNumber', (req, res) => {
             part_type: 'OEM Complete Cylinder Head',
             vehicle: { year: 2020, make: 'Toyota', model: 'Camry SE' },
             shipment: { origin: 'Atlanta Logistics Hub, GA', destination: 'Orlando, FL 32801' }
+        },
+        '856256215256': {
+            tracking_number: '856256215256',
+            part_type: 'Engine',
+            current_status: 'Delayed',
+            estimated_delivery_date: '2026-09-25',
+            shipment: {
+                origin: 'Coffeen avenue, Sheridan WY 82801',
+                destination: 'ALTSTART Automotive LLC 1816 Redwood rd, Salt Lake City UT 84104',
+                date_created: '2026-09-15 23:28:38',
+                last_updated: '2026-10-01 19:47:08'
+            },
+            vehicle: {
+                make: 'Toyota',
+                model: 'Sienna',
+                year: 2000
+            },
+            history: [
+                {
+                    status: 'Delayed',
+                    notes: 'Delayed due to customs at inter-state checks.',
+                    updated_at: '2026-10-01 19:47:08'
+                },
+                {
+                    status: 'Delivered',
+                    notes: 'Delayed due to customs at inter-state checks.',
+                    updated_at: '2026-10-01 19:46:55'
+                },
+                {
+                    status: 'Delayed',
+                    notes: 'Delayed due to customs at inter-state checks.',
+                    updated_at: '2026-10-01 19:44:55'
+                },
+                {
+                    status: 'Delayed',
+                    notes: 'Delayed due to customs at inter-state checks',
+                    updated_at: '2026-10-01 19:38:35'
+                },
+                {
+                    status: 'In Transit',
+                    notes: 'Record created',
+                    updated_at: '2026-09-15 23:28:38'
+                }
+            ]
         }
     };
 

@@ -3,7 +3,7 @@
  * Global SAM Auto - Heavy Freight & Auto Logistics
  */
 
-(function() {
+(function () {
   var API_KEY = 'pt_live_b89f964b3f26ca88d3e7d14abc5f3179010bc8254fe22fd0';
   var REMOTE_API_BASE = 'https://app.reviorcm.com/backend/index.php/api/v1/track/';
   var LOCAL_API_BASE = '/api/v1/track/';
@@ -43,38 +43,103 @@
       .replace(/'/g, '&#039;');
   }
 
-  function getStepIndex(status) {
+  function parseDateString(dateStr) {
+    if (!dateStr) return null;
+    if (typeof dateStr === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(dateStr.trim())) {
+      var parts = dateStr.trim().split('-');
+      return new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10));
+    }
+    var dt = new Date(typeof dateStr === 'string' ? dateStr.replace(' ', 'T') : dateStr);
+    return isNaN(dt.getTime()) ? null : dt;
+  }
+
+  function formatDateTime(dateStr) {
+    if (!dateStr) return '';
+    var dt = parseDateString(dateStr);
+    if (!dt || isNaN(dt.getTime())) return String(dateStr);
+    return dt.toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric'
+    }) + ' ' + dt.toLocaleTimeString('en-US', {
+      hour: 'numeric',
+      minute: '2-digit',
+      hour12: true
+    });
+  }
+
+  function getStepIndex(status, history) {
     if (!status) return 0;
     var s = status.toLowerCase().trim();
+    if (s === 'delayed' || s.indexOf('delay') !== -1 || s === 'on hold' || s === 'hold' || s === 'exception') {
+      if (Array.isArray(history)) {
+        for (var i = 0; i < history.length; i++) {
+          var hs = (history[i].status || '').toLowerCase().trim();
+          if (hs && hs.indexOf('delay') === -1 && hs !== 'on hold' && hs !== 'hold' && hs !== 'exception') {
+            return getStepIndex(hs);
+          }
+        }
+      }
+      return 2; // Default to In Transit step if no prior milestone is found
+    }
     if (s === 'delivered' || s === 'completed') return 4;
     if (s === 'out for delivery') return 3;
-    if (s === 'in transit' || s === 'delayed' || s === 'on hold' || s === 'transit') return 2;
+    if (s === 'in transit' || s === 'transit') return 2;
     if (s === 'picked up' || s === 'pickup') return 1;
     return 0;
   }
 
   function getStatusBadge(currentStatus, activeStep) {
-    var s = (currentStatus || '').toLowerCase();
-    var statusClass = 'processing';
-    var statusLabel = currentStatus || 'Processing';
+    var raw = (currentStatus || '').trim();
+    var s = raw.toLowerCase();
 
-    if (activeStep === 4 || s === 'delivered') {
-      statusClass = 'delivered';
-      statusLabel = 'Delivered';
-    } else if (activeStep === 3 || s === 'out for delivery') {
-      statusClass = 'out-for-delivery';
-      statusLabel = 'Out for Delivery';
-    } else if (activeStep === 2 || s === 'in transit') {
-      statusClass = 'in-transit';
-      statusLabel = 'In Transit';
-    } else if (activeStep === 1 || s === 'pickup' || s === 'picked up') {
-      statusClass = 'pickup';
-      statusLabel = 'Carrier Pickup';
+    // Check specific exception/alert statuses first so activeStep doesn't mask them
+    if (s === 'delayed' || s.indexOf('delay') !== -1) {
+      return {
+        statusClass: 'delayed',
+        statusLabel: raw || 'Delayed'
+      };
+    }
+    if (s === 'on hold' || s === 'hold' || s === 'exception') {
+      return {
+        statusClass: 'on-hold',
+        statusLabel: raw || 'On Hold'
+      };
+    }
+    if (s === 'cancelled' || s === 'canceled') {
+      return {
+        statusClass: 'cancelled',
+        statusLabel: raw || 'Cancelled'
+      };
+    }
+    if (s === 'delivered' || s === 'completed' || activeStep === 4) {
+      return {
+        statusClass: 'delivered',
+        statusLabel: 'Delivered'
+      };
+    }
+    if (s === 'out for delivery' || activeStep === 3) {
+      return {
+        statusClass: 'out-for-delivery',
+        statusLabel: 'Out for Delivery'
+      };
+    }
+    if (s === 'in transit' || s === 'transit' || activeStep === 2) {
+      return {
+        statusClass: 'in-transit',
+        statusLabel: 'In Transit'
+      };
+    }
+    if (s === 'pickup' || s === 'picked up' || activeStep === 1) {
+      return {
+        statusClass: 'pickup',
+        statusLabel: 'Carrier Pickup'
+      };
     }
 
     return {
-      statusClass: statusClass,
-      statusLabel: statusLabel
+      statusClass: 'processing',
+      statusLabel: raw || 'Processing'
     };
   }
 
@@ -120,7 +185,7 @@
     return formatted;
   }
 
-  window.trackConsignment = async function(customNum) {
+  window.trackConsignment = async function (customNum) {
     var input = document.getElementById('pt-input');
     var resDiv = document.getElementById('pt-result');
 
@@ -185,19 +250,41 @@
       return;
     }
 
-    var activeStep = getStepIndex(d.current_status);
+    var activeStep = getStepIndex(d.current_status, d.history);
     var badge = getStatusBadge(d.current_status, activeStep);
     var consignmentId = d.tracking_number || num;
 
-    var estDateObj = d.estimated_delivery_date ? new Date(d.estimated_delivery_date) : null;
+    var isDelayed = (d.current_status || '').toLowerCase().indexOf('delay') !== -1 || (d.current_status || '').toLowerCase() === 'on hold';
+    var latestHistory = (Array.isArray(d.history) && d.history.length > 0) ? d.history[0] : null;
+    var delayNotice = (latestHistory && latestHistory.notes) ? latestHistory.notes : (isDelayed ? 'Shipment is experiencing a transit delay.' : '');
+    var lastUpdatedText = (latestHistory && latestHistory.updated_at) ? formatDateTime(latestHistory.updated_at) : (d.shipment && d.shipment.last_updated ? formatDateTime(d.shipment.last_updated) : '');
+
+    var estDateObj = parseDateString(d.estimated_delivery_date);
     var formattedDeliveryDate = (estDateObj && !isNaN(estDateObj.getTime()))
       ? estDateObj.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' })
       : 'Pending Confirmation';
+
+    if (isDelayed) {
+      formattedDeliveryDate += ' <span style="font-size:11px;font-weight:700;color:#b45309;background:#fffbeb;padding:2px 7px;border-radius:3px;border:1px solid #fde68a;margin-left:6px;vertical-align:middle;">DELAYED</span>';
+    }
 
     var partType = d.part_type || 'Automotive Component Assembly';
     var vehicleFitment = d.vehicle ? (d.vehicle.year + ' ' + d.vehicle.make + ' ' + d.vehicle.model) : 'OEM Vehicle Specification';
     var originTerminal = (d.shipment && d.shipment.origin) ? d.shipment.origin : 'Logistics Fulfillment Hub';
     var destinationHub = (d.shipment && d.shipment.destination) ? d.shipment.destination : 'Customer Delivery Address';
+
+    // Delay / Exception notice banner HTML
+    var noticeBannerHtml = '';
+    if (isDelayed) {
+      noticeBannerHtml =
+        '<div class="pt-notice-banner pt-banner-delayed">' +
+        '<div class="pt-banner-icon"><i class="fa fa-exclamation-triangle"></i></div>' +
+        '<div class="pt-banner-body">' +
+        '<div class="pt-banner-title">Consignment Notice: Delayed</div>' +
+        '<div class="pt-banner-text">' + escapeHtml(delayNotice) + '</div>' +
+        '</div>' +
+        '</div>';
+    }
 
     // Build Vertical 5-Step Timeline HTML
     var stepsHtml = '';
@@ -212,16 +299,26 @@
       if (isActive) stepClass += ' active';
       if (isPending) stepClass += ' pending';
       if (isDeliveredStep) stepClass += ' delivered';
+      if (isActive && isDelayed) stepClass += ' delayed';
 
-      var nodeContent = isCompleted || (isActive && activeStep === 4)
+      var nodeContent = isCompleted || (isActive && activeStep === 4 && !isDelayed)
         ? CHECK_SVG
         : (i + 1);
 
       var tagHtml = '';
       if (isActive) {
-        tagHtml = '<span class="pt-vstep-tag">' + (activeStep === 4 ? 'Delivered' : 'Current Milestone') + '</span>';
+        if (isDelayed) {
+          tagHtml = '<span class="pt-vstep-tag pt-tag-delayed"><i class="fa fa-exclamation-circle" style="margin-right:4px;"></i>Delayed</span>';
+        } else {
+          tagHtml = '<span class="pt-vstep-tag">' + (activeStep === 4 ? 'Delivered' : 'Current Milestone') + '</span>';
+        }
       } else if (isCompleted) {
         tagHtml = '<span class="pt-vstep-tag">Completed</span>';
+      }
+
+      var delayDetailHtml = '';
+      if (isActive && isDelayed && delayNotice) {
+        delayDetailHtml = '<div class="pt-vdelay-detail"><i class="fa fa-info-circle"></i> ' + escapeHtml(delayNotice) + '</div>';
       }
 
       // Location & date are only shown for the final milestone step
@@ -231,93 +328,95 @@
           ? (activeStep === 4 ? formatShortDate(estDateObj) : 'Est. ' + formatShortDate(estDateObj))
           : '';
 
-        metaHtml = 
+        metaHtml =
           '<div class="pt-vmeta">' +
-            '<span><i class="fa fa-map-marker"></i> ' + escapeHtml(destinationHub) + '</span>' +
-            (timeText ? '<span><i class="fa fa-calendar-check-o"></i> ' + escapeHtml(timeText) + '</span>' : '') +
+          '<span><i class="fa fa-map-marker"></i> ' + escapeHtml(destinationHub) + '</span>' +
+          (timeText ? '<span><i class="fa fa-calendar-check-o"></i> ' + escapeHtml(timeText) + '</span>' : '') +
           '</div>';
       }
 
-      stepsHtml += 
+      stepsHtml +=
         '<div class="' + stepClass + '">' +
-          '<div class="pt-vmarker-col">' +
-            '<div class="pt-vnode">' + nodeContent + '</div>' +
-            '<div class="pt-vline"></div>' +
-          '</div>' +
-          '<div class="pt-vcontent">' +
-            '<div class="pt-vrow">' +
-              '<div class="pt-vname">' + MILESTONES[i].title + '</div>' +
-              tagHtml +
-            '</div>' +
-            '<div class="pt-vnote">' + MILESTONES[i].note + '</div>' +
-            metaHtml +
-          '</div>' +
+        '<div class="pt-vmarker-col">' +
+        '<div class="pt-vnode">' + nodeContent + '</div>' +
+        '<div class="pt-vline"></div>' +
+        '</div>' +
+        '<div class="pt-vcontent">' +
+        '<div class="pt-vrow">' +
+        '<div class="pt-vname">' + MILESTONES[i].title + '</div>' +
+        tagHtml +
+        '</div>' +
+        '<div class="pt-vnote">' + MILESTONES[i].note + '</div>' +
+        delayDetailHtml +
+        metaHtml +
+        '</div>' +
         '</div>';
     }
 
     if (resDiv) {
-      resDiv.innerHTML = 
+      resDiv.innerHTML =
         '<div class="pt-summary-card">' +
-          '<div class="pt-summary-header">' +
-            '<div class="pt-consignment-group">' +
-              '<span class="pt-meta-label">Consignment Tracking ID</span>' +
-              '<span class="pt-consignment-id">' + escapeHtml(consignmentId) + '</span>' +
-            '</div>' +
-            '<div class="pt-status-badge ' + badge.statusClass + '">' +
-              '<span class="pt-badge-dot"></span>' +
-              escapeHtml(badge.statusLabel) +
-            '</div>' +
-          '</div>' +
-          '<div class="pt-delivery-row">' +
-            '<div>' +
-              '<div class="pt-meta-label">Estimated Delivery</div>' +
-              '<div class="pt-delivery-val">' + escapeHtml(formattedDeliveryDate) + '</div>' +
-            '</div>' +
-            '<div class="pt-carrier-route">' +
-              '<span>' + escapeHtml(originTerminal.split(',')[0] || 'Origin') + '</span>' +
-              '<span class="pt-route-arrow">&rarr;</span>' +
-              '<span>' + escapeHtml(destinationHub.split(',')[0] || 'Destination') + '</span>' +
-            '</div>' +
-          '</div>' +
+        '<div class="pt-summary-header">' +
+        '<div class="pt-consignment-group">' +
+        '<span class="pt-meta-label">Consignment Tracking ID</span>' +
+        '<span class="pt-consignment-id">' + escapeHtml(consignmentId) + '</span>' +
+        '</div>' +
+        '<div class="pt-status-badge ' + badge.statusClass + '">' +
+        '<span class="pt-badge-dot"></span>' +
+        escapeHtml(badge.statusLabel) +
+        '</div>' +
+        '</div>' +
+        '<div class="pt-delivery-row">' +
+        '<div>' +
+        '<div class="pt-meta-label">Estimated Delivery</div>' +
+        '<div class="pt-delivery-val">' + formattedDeliveryDate + '</div>' +
+        '</div>' +
+        '<div class="pt-carrier-route">' +
+        '<span>' + escapeHtml(originTerminal.split(',')[0] || 'Origin') + '</span>' +
+        '<span class="pt-route-arrow">&rarr;</span>' +
+        '<span>' + escapeHtml(destinationHub.split(',')[0] || 'Destination') + '</span>' +
+        '</div>' +
+        '</div>' +
+        noticeBannerHtml +
         '</div>' +
 
         '<div class="pt-spec-grid">' +
-          '<div class="pt-spec-item">' +
-            '<div class="pt-spec-label">Part Item Specification</div>' +
-            '<div class="pt-spec-val">' + escapeHtml(partType) + '</div>' +
-          '</div>' +
-          '<div class="pt-spec-item">' +
-            '<div class="pt-spec-label">Vehicle Fitment</div>' +
-            '<div class="pt-spec-val">' + escapeHtml(vehicleFitment) + '</div>' +
-          '</div>' +
-          '<div class="pt-spec-item">' +
-            '<div class="pt-spec-label">Origin Facility</div>' +
-            '<div class="pt-spec-val">' + escapeHtml(originTerminal) + '</div>' +
-          '</div>' +
-          '<div class="pt-spec-item">' +
-            '<div class="pt-spec-label">Destination Address</div>' +
-            '<div class="pt-spec-val">' + escapeHtml(destinationHub) + '</div>' +
-          '</div>' +
+        '<div class="pt-spec-item">' +
+        '<div class="pt-spec-label">Part Item Specification</div>' +
+        '<div class="pt-spec-val">' + escapeHtml(partType) + '</div>' +
+        '</div>' +
+        '<div class="pt-spec-item">' +
+        '<div class="pt-spec-label">Vehicle Fitment</div>' +
+        '<div class="pt-spec-val">' + escapeHtml(vehicleFitment) + '</div>' +
+        '</div>' +
+        '<div class="pt-spec-item">' +
+        '<div class="pt-spec-label">Origin Facility</div>' +
+        '<div class="pt-spec-val">' + escapeHtml(originTerminal) + '</div>' +
+        '</div>' +
+        '<div class="pt-spec-item">' +
+        '<div class="pt-spec-label">Destination Address</div>' +
+        '<div class="pt-spec-val">' + escapeHtml(destinationHub) + '</div>' +
+        '</div>' +
         '</div>' +
 
         '<div class="pt-timeline-title">' +
-          '<span>Milestone Verification Log</span>' +
-          '<span>5-Point Check</span>' +
+        '<span>Milestone Verification Log</span>' +
+        '<span>5-Point Check</span>' +
         '</div>' +
 
         '<div class="pt-vtimeline">' +
-          stepsHtml +
+        stepsHtml +
         '</div>' +
 
         '<div class="pt-footer-note">' +
-          '<span class="pt-verified"><i class="fa fa-check-circle"></i> Verified Freight Dispatch</span>' +
-          '<span>Logistics Support: <a href="tel:+18776118211" style="color:var(--pt-text);font-weight:600;text-decoration:none;">+1 (833)9977866</a></span>' +
+        '<span class="pt-verified"><i class="fa fa-check-circle"></i> Verified Freight Dispatch</span>' +
+        '<span>Logistics Support: <a href="tel:+18776118211" style="color:var(--pt-text);font-weight:600;text-decoration:none;">+1 (833)9977866</a></span>' +
         '</div>';
     }
   };
 
   // Modal Control Functions
-  window.openTrackModal = function(e) {
+  window.openTrackModal = function (e) {
     if (e && e.preventDefault) e.preventDefault();
     var modal = document.getElementById('ptModalOverlay');
     if (!modal) return;
@@ -325,11 +424,11 @@
     document.body.style.overflow = 'hidden';
     var input = document.getElementById('pt-input');
     if (input) {
-      setTimeout(function() { input.focus(); }, 120);
+      setTimeout(function () { input.focus(); }, 120);
     }
   };
 
-  window.closeTrackModal = function() {
+  window.closeTrackModal = function () {
     var modal = document.getElementById('ptModalOverlay');
     if (!modal) return;
     modal.classList.remove('is-active');
@@ -342,14 +441,14 @@
     var input = document.getElementById('pt-input');
 
     if (btn) {
-      btn.addEventListener('click', function(ev) {
+      btn.addEventListener('click', function (ev) {
         ev.preventDefault();
         window.trackConsignment();
       });
     }
 
     if (input) {
-      input.addEventListener('keydown', function(ev) {
+      input.addEventListener('keydown', function (ev) {
         if (ev.key === 'Enter') {
           ev.preventDefault();
           window.trackConsignment();
@@ -358,7 +457,7 @@
     }
 
     // Close on Escape key
-    document.addEventListener('keydown', function(ev) {
+    document.addEventListener('keydown', function (ev) {
       if (ev.key === 'Escape') {
         window.closeTrackModal();
       }
@@ -372,7 +471,7 @@
         if (input) input.value = trackingParam;
         window.trackConsignment(trackingParam);
       }
-    } catch (e) {}
+    } catch (e) { }
   }
 
   if (document.readyState === 'loading') {
